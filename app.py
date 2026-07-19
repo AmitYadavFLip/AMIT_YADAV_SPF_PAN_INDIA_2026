@@ -9,44 +9,39 @@ st.set_page_config(page_title="Flipkart SPF Dashboard 2026", page_icon="🛒", l
 
 st.markdown("""
 <style>
-.block-container{padding-top:0.5rem;max-width:100%}
-div[data-testid="metric-container"]{
-    background:white;border:1px solid #e2e8f0;border-radius:8px;
-    padding:14px;border-left:4px solid #2874F0;
-    box-shadow:0 1px 3px rgba(0,0,0,0.08)
-}
-div[data-testid="stMetricValue"]{color:#2874F0;font-weight:800;font-size:1.8rem}
-div[data-testid="stMetricLabel"]{font-weight:600;font-size:0.9rem;color:#475569}
+.block-container{padding-top:0.3rem;max-width:100%}
 .stTabs [data-baseweb="tab-list"]{background:#f0f4ff;border-radius:10px;padding:5px;gap:5px}
 .stTabs [data-baseweb="tab"]{border-radius:8px;font-weight:700;font-size:15px;padding:10px 28px;letter-spacing:0.3px}
 .stTabs [aria-selected="true"]{background:#2874F0 !important;color:white !important}
-.filter-row > div{display:inline-block}
 h2,h3{color:#1a3a7a;font-weight:800}
 footer{display:none}
 header{display:none}
-/* Filter dropdowns styling */
-div[data-baseweb="select"] > div{border-radius:6px !important;border-color:#d1d9f0 !important}
 </style>
+""", unsafe_allow_html=True)
+
+# ── MADE BY — TOP ──
+st.markdown("""
+<div style="background:#FFD700;padding:5px 20px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+  <span style="color:#1a3a7a;font-size:12px;font-weight:700;opacity:0.7">Flipkart · SPF Dashboard 2026</span>
+  <span style="color:#1a3a7a;font-size:13px;font-weight:800">✨ Made By Amit Yadav — QA</span>
+</div>
 """, unsafe_allow_html=True)
 
 # ── HEADER ──
 st.markdown("""
-<div style="background:linear-gradient(135deg,#2874F0 0%,#1a5bbf 100%);padding:0;border-radius:12px;color:white;margin-bottom:12px;overflow:hidden;box-shadow:0 4px 12px rgba(40,116,240,0.3)">
-  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 28px;flex-wrap:wrap;gap:12px">
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-      <div style="background:white;border-radius:10px;padding:8px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0">
-        <span style="color:#2874F0;font-size:20px;font-weight:900;letter-spacing:-1px">Flipkart</span>
-        <div style="background:#FFD700;color:#2874F0;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px">PLUS</div>
+<div style="background:linear-gradient(135deg,#2874F0 0%,#1a5bbf 100%);border-radius:12px;color:white;margin-bottom:12px;overflow:hidden;box-shadow:0 4px 12px rgba(40,116,240,0.3)">
+  <div style="padding:14px 24px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="background:white;border-radius:8px;padding:7px 14px;display:flex;align-items:center;gap:6px">
+        <span style="color:#2874F0;font-size:18px;font-weight:900;letter-spacing:-1px;white-space:nowrap">Flipkart</span>
+        <div style="background:#FFD700;color:#2874F0;font-size:8px;font-weight:800;padding:1px 5px;border-radius:3px;white-space:nowrap">PLUS</div>
       </div>
       <div>
-        <div style="font-size:18px;font-weight:800;letter-spacing:-0.3px">SPF Dashboard — Pan India 2026</div>
-        <div style="font-size:12px;opacity:0.85;margin-top:3px">Seller Protection Fund · Returns & Claims · Manager View</div>
+        <div style="font-size:17px;font-weight:800;white-space:nowrap">SPF Dashboard — Pan India 2026</div>
+        <div style="font-size:11px;opacity:0.85;margin-top:2px">Seller Protection Fund · Returns & Claims · Manager View</div>
       </div>
     </div>
-    <div style="text-align:right;flex-shrink:0">
-      <div style="background:rgba(255,255,255,0.2);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;display:inline-block">🟢 LIVE</div>
-      <div style="font-size:11px;opacity:0.75;margin-top:4px">Data: GitHub · Auto refresh</div>
-    </div>
+    <div style="background:rgba(255,255,255,0.2);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;white-space:nowrap">🟢 LIVE</div>
   </div>
   <div style="background:#FFD700;height:3px"></div>
 </div>
@@ -135,32 +130,26 @@ kpi_df = to_num(kpi_df, 'total_spf')
 total_spf = kpi_df['total_spf'].sum() if not kpi_df.empty else 0
 total_cr = total_spf / 10000000
 
-# ── TOP KPI — SINGLE BIG NUMBER ──
+# ── TOP KPI — TOTAL SPF ONLY ──
 avg_asp = kpi_df['avg_asp'].mean() if not kpi_df.empty else 0
 total_returns = int(kpi_df['total_returns'].sum()) if not kpi_df.empty else 0
 total_sellers = int(kpi_df['total_sellers'].sum()) if not kpi_df.empty else 0
 total_hubs = int(kpi_df['total_hubs'].sum()) if not kpi_df.empty else 0
 
 st.markdown(f"""
-<div style="background:linear-gradient(135deg,#f0f4ff,#e8edff);border:2px solid #2874F0;border-radius:12px;padding:18px 28px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
-  <div>
-    <div style="font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px">Total SPF (Approved Claim Amount)</div>
-    <div style="font-size:42px;font-weight:900;color:#2874F0;letter-spacing:-1px;margin-top:4px">{total_cr:.2f} <span style="font-size:24px">Cr</span></div>
-    <div style="font-size:13px;color:#64748b;margin-top:2px">₹{total_spf:,.0f} &nbsp;·&nbsp; {total_returns:,} returns</div>
+<div style="background:linear-gradient(135deg,#1a3a7a,#2874F0,#1a5bbf);border-radius:14px;padding:24px 36px;margin-bottom:16px;box-shadow:0 8px 24px rgba(40,116,240,0.35);display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+  <div style="flex:1;min-width:200px">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px">💰 TOTAL SPF — APPROVED CLAIM AMOUNT</div>
+    <div style="display:flex;align-items:baseline;gap:10px">
+      <span style="font-size:56px;font-weight:900;color:#FFD700;letter-spacing:-2px;line-height:1">{total_cr:.2f}</span>
+      <span style="font-size:28px;font-weight:800;color:white;opacity:0.9">Cr</span>
+    </div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px">₹{total_spf:,.0f} &nbsp;·&nbsp; {total_returns:,} total returns &nbsp;·&nbsp; {len(sel_months)} months</div>
   </div>
-  <div style="display:flex;gap:20px;flex-wrap:wrap">
-    <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
-      <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Avg ASP</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">₹{avg_asp:.0f}</div>
-    </div>
-    <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
-      <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Sellers</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">{total_sellers:,}</div>
-    </div>
-    <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
-      <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Hubs</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">{total_hubs:,}</div>
-    </div>
+  <div style="background:rgba(255,255,255,0.1);width:1px;height:60px;flex-shrink:0"></div>
+  <div style="text-align:center;flex-shrink:0">
+    <div style="font-size:11px;color:rgba(255,255,255,0.65);font-weight:600;text-transform:uppercase;letter-spacing:0.8px">In Lakh</div>
+    <div style="font-size:26px;font-weight:800;color:white">₹{total_spf/100000:,.1f}L</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
