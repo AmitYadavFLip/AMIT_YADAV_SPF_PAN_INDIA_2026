@@ -183,11 +183,11 @@ with tab2:
 
         if sel_loss != 'All Loss' and not loss_df2.empty:
             loss_df2['spf'] = pd.to_numeric(loss_df2['spf'], errors='coerce').fillna(0)
-            filtered_qa = loss_df2[loss_df2['loss_bucket']==sel_loss].groupby('QA_Name')['spf'].sum().reset_index()
-            filtered_qa.columns = ['QA_Name','spf']
+            filtered_qa = loss_df2[loss_df2['loss_bucket']==sel_loss].groupby('L1')['spf'].sum().reset_index()
+            filtered_qa.columns = ['L1','spf']
             qa_show = filtered_qa
         else:
-            qa_show = qa_df.groupby('QA_Name')['spf'].sum().reset_index()
+            qa_show = qa_df.groupby('L1')['spf'].sum().reset_index()
 
         qa_show = qa_show.sort_values('spf', ascending=False)
         qa_show['SPF (Lakh)'] = (qa_show['spf']/100000).round(2)
@@ -200,7 +200,7 @@ with tab2:
         c3.metric("SPF (Cr)", f"{qa_show['spf'].sum()/10000000:.4f} Cr")
 
         # Chart
-        fq = px.bar(qa_show, x='QA_Name', y='SPF (Lakh)',
+        fq = px.bar(qa_show, x='L1', y='SPF (Lakh)',
                    text=qa_show['SPF (Lakh)'].apply(lambda x: f'₹{x:.1f}L'),
                    color='SPF (Lakh)', color_continuous_scale='Oranges',
                    title="QA wise SPF")
@@ -211,7 +211,7 @@ with tab2:
 
         # Table
         st.markdown("**Full QA Table** — Column pe click karke sort karo")
-        disp = qa_show[['QA_Name','SPF (Lakh)','SPF (Cr)']].copy()
+        disp = qa_show[['L1','SPF (Lakh)','SPF (Cr)']].copy()
         disp['SPF (₹)'] = qa_show['spf'].apply(lambda x: f"₹{x:,.2f}")
         st.dataframe(disp, use_container_width=True, height=400)
 
@@ -221,15 +221,15 @@ with tab2:
         qa_hub_df = merge_months('qa_hub', selected_months)
         if not qa_hub_df.empty:
             qa_hub_df['spf'] = pd.to_numeric(qa_hub_df['spf'], errors='coerce').fillna(0)
-            qa_names = ['Select QA'] + sorted(qa_hub_df['QA_Name'].dropna().unique().tolist())
+            qa_names = ['Select QA'] + sorted(qa_hub_df['L1'].dropna().unique().tolist())
             sel_qa = st.selectbox("QA Name select karo:", qa_names)
             if sel_qa != 'Select QA':
-                hub_detail = qa_hub_df[qa_hub_df['QA_Name']==sel_qa].copy()
+                hub_detail = qa_hub_df[qa_hub_df['L1']==sel_qa].copy()
                 hub_detail = hub_detail.sort_values('spf', ascending=False)
                 hub_detail['SPF (Lakh)'] = (hub_detail['spf']/100000).round(2)
                 hub_detail['SPF (Cr)']   = (hub_detail['spf']/10000000).round(6)
 
-                fh = px.bar(hub_detail.head(15), x='Ph_Name', y='SPF (Lakh)',
+                fh = px.bar(hub_detail.head(15), x='Ph', y='SPF (Lakh)',
                            text=hub_detail.head(15)['SPF (Lakh)'].apply(lambda x: f'₹{x:.2f}L'),
                            color='SPF (Lakh)', color_continuous_scale='Blues',
                            title=f"{sel_qa} — Hub wise SPF")
@@ -238,7 +238,7 @@ with tab2:
                                 plot_bgcolor='white', height=350)
                 st.plotly_chart(fh, use_container_width=True)
 
-                disp2 = hub_detail[['Ph_Name','returns','SPF (Lakh)','SPF (Cr)']].copy()
+                disp2 = hub_detail[['Ph','returns','SPF (Lakh)','SPF (Cr)']].copy()
                 disp2['SPF (₹)'] = hub_detail['spf'].apply(lambda x: f"₹{x:,.2f}")
                 st.dataframe(disp2, use_container_width=True, height=350)
 
@@ -251,7 +251,7 @@ with tab3:
         hub_df['spf'] = pd.to_numeric(hub_df['spf'], errors='coerce').fillna(0)
         hub_df['returns'] = pd.to_numeric(hub_df['returns'], errors='coerce').fillna(0)
 
-        hg = hub_df.groupby('Ph_Name').agg(
+        hg = hub_df.groupby('Ph').agg(
             returns=('returns','sum'),
             spf=('spf','sum')
         ).reset_index().sort_values('spf', ascending=False)
@@ -261,13 +261,13 @@ with tab3:
         # Search
         search = st.text_input("🔍 Hub search karo")
         if search:
-            hg = hg[hg['Ph_Name'].str.contains(search, case=False, na=False)]
+            hg = hg[hg['Ph'].str.contains(search, case=False, na=False)]
 
         c1,c2 = st.columns(2)
         c1.metric("Total Hubs", len(hg))
         c2.metric("Total SPF", f"₹{hg['spf'].sum()/100000:.2f}L")
 
-        fhub = px.bar(hg.head(20), x='Ph_Name', y='SPF (Lakh)',
+        fhub = px.bar(hg.head(20), x='Ph', y='SPF (Lakh)',
                      text=hg.head(20)['SPF (Lakh)'].apply(lambda x: f'₹{x:.2f}L'),
                      color='SPF (Lakh)', color_continuous_scale='Blues',
                      title="Top 20 Hubs by SPF")
@@ -276,7 +276,7 @@ with tab3:
                           plot_bgcolor='white', height=400)
         st.plotly_chart(fhub, use_container_width=True)
 
-        disp3 = hg[['Ph_Name','returns','SPF (Lakh)','SPF (Cr)']].copy()
+        disp3 = hg[['Ph','returns','SPF (Lakh)','SPF (Cr)']].copy()
         disp3['SPF (₹)'] = hg['spf'].apply(lambda x: f"₹{x:,.2f}")
         st.dataframe(disp3, use_container_width=True, height=450)
 
