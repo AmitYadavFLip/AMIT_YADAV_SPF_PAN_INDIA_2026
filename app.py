@@ -26,11 +26,11 @@ GITHUB_RAW = "https://raw.githubusercontent.com/AmitYadavFLip/AMIT_YADAV_SPF_PAN
 
 MONTHS = {
     'Jan': 'Jan_summary.json',
-    # 'Feb': 'Feb_summary.json',  # Uncomment jab file upload ho
-    # 'Mar': 'Mar_summary.json',
-    # 'Apr': 'Apr_summary.json',
-    # 'May': 'May_summary.json',
-    # 'Jun': 'Jun_summary.json',
+    'Feb': 'Feb_summary.json',
+    'Mar': 'Mar_summary.json',
+    'Apr': 'Apr_summary.json',
+    'May': 'May_summary.json',
+    'Jun': 'Jun_summary.json',
 }
 
 @st.cache_data(ttl=300)  # 5 min cache
