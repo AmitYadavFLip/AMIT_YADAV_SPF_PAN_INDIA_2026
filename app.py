@@ -4,20 +4,47 @@ import plotly.express as px
 import requests
 import json
 
-st.set_page_config(page_title="Flipkart SPF Dashboard 2026", page_icon="📦", layout="wide")
+st.set_page_config(page_title="Flipkart SPF Dashboard 2026", page_icon="🛒", layout="wide")
 
 st.markdown("""
 <style>
-.block-container{padding-top:1rem}
-div[data-testid="metric-container"]{background:white;border:1px solid #e2e8f0;border-radius:8px;padding:12px;border-left:4px solid #f97316}
+.block-container{padding-top:0.5rem}
+div[data-testid="metric-container"]{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:12px;
+    border-left:4px solid #2874F0;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08)
+}
+div[data-testid="stMetricValue"]{color:#2874F0;font-weight:800}
+.stTabs [data-baseweb="tab-list"]{background:#f0f4ff;border-radius:8px;padding:4px}
+.stTabs [data-baseweb="tab"]{border-radius:6px;font-weight:600}
+.stTabs [aria-selected="true"]{background:#2874F0;color:white}
+footer{display:none}
 </style>
 """, unsafe_allow_html=True)
 
 # ── HEADER ──
 st.markdown("""
-<div style="background:linear-gradient(90deg,#f97316,#fb923c);padding:15px 20px;border-radius:10px;color:white;margin-bottom:15px">
-<h2 style="margin:0">📦 Flipkart SPF Dashboard — Pan India 2026</h2>
-<p style="margin:0;opacity:0.9;font-size:14px">Seller Protection Fund · Returns & Claims · Manager View · 🟢 LIVE</p>
+<div style="background:linear-gradient(135deg,#2874F0 0%,#1a5bbf 100%);padding:0;border-radius:12px;color:white;margin-bottom:16px;overflow:hidden;box-shadow:0 4px 12px rgba(40,116,240,0.3)">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="background:white;border-radius:10px;padding:8px 14px;display:flex;align-items:center;gap:8px">
+        <span style="color:#2874F0;font-size:22px;font-weight:900;letter-spacing:-1px">Flipkart</span>
+        <div style="background:#FFD700;color:#2874F0;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;letter-spacing:0.5px">PLUS</div>
+      </div>
+      <div>
+        <div style="font-size:20px;font-weight:800;letter-spacing:-0.5px">SPF Dashboard — Pan India 2026</div>
+        <div style="font-size:12px;opacity:0.85;margin-top:2px">Seller Protection Fund · Returns & Claims · Manager View</div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="background:rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;display:inline-block">🟢 LIVE</div>
+      <div style="font-size:11px;opacity:0.75;margin-top:4px">Data: GitHub · Auto refresh</div>
+    </div>
+  </div>
+  <div style="background:#FFD700;height:3px"></div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -325,4 +352,13 @@ with tab4:
         rt2['SPF (₹)'] = rt2['spf'].apply(lambda x: f"₹{x:,.2f}")
         st.dataframe(rt2, use_container_width=True)
 
-st.caption(f"Flipkart SPF Dashboard 2026 · Data from GitHub · All amounts in ₹ INR · Jan: {total_returns:,} returns")
+st.markdown("""
+<div style="margin-top:30px;background:linear-gradient(135deg,#2874F0,#1a5bbf);border-radius:10px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center">
+  <div style="color:white;font-size:12px;opacity:0.9">
+    📊 Flipkart SPF Dashboard 2026 &nbsp;·&nbsp; Data: GitHub &nbsp;·&nbsp; All amounts in ₹ INR
+  </div>
+  <div style="background:#FFD700;color:#1a3a7a;font-size:12px;font-weight:800;padding:6px 16px;border-radius:20px;letter-spacing:0.3px">
+    ✨ Made By Amit Yadav — QA
+  </div>
+</div>
+""", unsafe_allow_html=True)
