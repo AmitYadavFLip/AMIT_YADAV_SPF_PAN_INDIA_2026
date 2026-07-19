@@ -136,25 +136,30 @@ total_spf = kpi_df['total_spf'].sum() if not kpi_df.empty else 0
 total_cr = total_spf / 10000000
 
 # ── TOP KPI — SINGLE BIG NUMBER ──
+avg_asp = kpi_df['avg_asp'].mean() if not kpi_df.empty else 0
+total_returns = int(kpi_df['total_returns'].sum()) if not kpi_df.empty else 0
+total_sellers = int(kpi_df['total_sellers'].sum()) if not kpi_df.empty else 0
+total_hubs = int(kpi_df['total_hubs'].sum()) if not kpi_df.empty else 0
+
 st.markdown(f"""
 <div style="background:linear-gradient(135deg,#f0f4ff,#e8edff);border:2px solid #2874F0;border-radius:12px;padding:18px 28px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
   <div>
     <div style="font-size:13px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px">Total SPF (Approved Claim Amount)</div>
     <div style="font-size:42px;font-weight:900;color:#2874F0;letter-spacing:-1px;margin-top:4px">{total_cr:.2f} <span style="font-size:24px">Cr</span></div>
-    <div style="font-size:13px;color:#64748b;margin-top:2px">₹{total_spf:,.0f} &nbsp;·&nbsp; {kpi_df['total_returns'].sum() if not kpi_df.empty else 0:,.0f} returns</div>
+    <div style="font-size:13px;color:#64748b;margin-top:2px">₹{total_spf:,.0f} &nbsp;·&nbsp; {total_returns:,} returns</div>
   </div>
   <div style="display:flex;gap:20px;flex-wrap:wrap">
     <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
       <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Avg ASP</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">₹{kpi_df['avg_asp'].mean():.0f if not kpi_df.empty else 0}</div>
+      <div style="font-size:22px;font-weight:800;color:#2874F0">₹{avg_asp:.0f}</div>
     </div>
     <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
       <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Sellers</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">{kpi_df['total_sellers'].sum() if not kpi_df.empty else 0:,.0f}</div>
+      <div style="font-size:22px;font-weight:800;color:#2874F0">{total_sellers:,}</div>
     </div>
     <div style="text-align:center;background:white;border-radius:10px;padding:12px 20px;border:1px solid #d1d9f0">
       <div style="font-size:11px;color:#64748b;font-weight:600;text-transform:uppercase">Hubs</div>
-      <div style="font-size:22px;font-weight:800;color:#2874F0">{kpi_df['total_hubs'].sum() if not kpi_df.empty else 0:,.0f}</div>
+      <div style="font-size:22px;font-weight:800;color:#2874F0">{total_hubs:,}</div>
     </div>
   </div>
 </div>
